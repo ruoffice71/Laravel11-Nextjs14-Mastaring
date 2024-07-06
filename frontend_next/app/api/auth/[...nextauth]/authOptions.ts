@@ -25,6 +25,10 @@ export const authOptions:AuthOptions= {
     },
     callbacks:{
         async jwt({ token, user, trigger, session }) {
+            if (trigger==="update" && session?.profile_image) {
+                const user:CustomUser = token.user as CustomUser
+                user.profile_image = session?.profile_image
+            }
             if (user) {
                 token.user = user
             }

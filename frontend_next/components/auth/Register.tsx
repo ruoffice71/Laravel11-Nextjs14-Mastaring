@@ -14,6 +14,7 @@ import { TabsContent, } from "@/components/ui/tabs"
 import myAxios from '@/lib/axios.config';
 import { REGISTER_URL } from '@/lib/apiEndPoint';
 import { toast } from 'react-toastify';
+import { signIn } from 'next-auth/react';
 export default function Register() {
     const [authState, setAuthState] = useState({
         name: "",
@@ -36,8 +37,13 @@ export default function Register() {
       myAxios.post(REGISTER_URL, authState)
       .then((res) => {
         setLoading(false)
-        const response = res.data
         toast.success("Account created successfully! We are logging you!")
+        signIn("credentials", {
+          email:authState.email,
+          password:authState.password,
+          redirect:true,
+          callbackUrl: "/",
+        });
       })
       .catch((err) => {
         setLoading(false)

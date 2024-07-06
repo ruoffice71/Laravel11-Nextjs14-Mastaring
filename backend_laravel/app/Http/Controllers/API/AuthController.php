@@ -33,7 +33,7 @@ class AuthController extends Controller
         try {
             $user = User::where("email", $payload["email"])->first();
             if ($user) {
-                // * Check password
+                // Check password
                 if (!Hash::check($payload["password"], $user->password)) {
                     return response()->json(["status" => 401, "message" => "Invalid credentials."]);
                 }
@@ -44,12 +44,12 @@ class AuthController extends Controller
             }
             return response()->json(["message" => "Invalid credentials."], 401);
         } catch (\Exception $err) {
-            Log::info("user_register_err =>" . $err->getMessage());
+            Log::info("Logging Credintials Error =>" . $err->getMessage());
             return response()->json(["status" => 500, "message" => "Something went wrong!"], 500);
         }
     }
 
-    // * check credentials
+    // check credentials
     public function checkCredentias(Request $request)
     {
         $payload = $request->validate([
@@ -60,7 +60,7 @@ class AuthController extends Controller
         try {
             $user = User::where("email", $payload["email"])->first();
             if ($user) {
-                // * Check password
+                // Check password
                 if (!Hash::check($payload["password"], $user->password)) {
                     return response()->json(["message" => "Invalid credentials."], 401);
                 }
@@ -70,6 +70,16 @@ class AuthController extends Controller
         } catch (\Exception $err) {
             Log::info("user_register_err =>" . $err->getMessage());
             return response()->json(["status" => 500, "message" => "Something went wrong!"], 500);
+        }
+    }
+
+    public function logout(Request $request) {
+        try {
+            $request->user()->currentAccessToken()->delete();
+            return ["message" => "Logged out successful!"];
+        } catch (\Exception $err) {
+            Log::info("Logout Error! =>" . $err->getMessage());
+            return response()->json(["message" => "Something went wrong!"], 500);
         }
     }
 
