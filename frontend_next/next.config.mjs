@@ -12,7 +12,10 @@ const nextConfig = {
                 protocol:"https" //if ssl has then it will be "https"
             }
         ]
-    }
+    },
+
+    // this line will be commented before live.
+    reactStrictMode: false,
 };
 
 export default nextConfig;

@@ -14,6 +14,6 @@ class Post extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, "user_id", "id")->select("id", "profile_image");
+        return $this->belongsTo(User::class)->select("id", "name", "profile_image", "username", "email");
     }
 }

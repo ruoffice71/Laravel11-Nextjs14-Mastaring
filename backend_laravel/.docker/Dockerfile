@@ -25,7 +25,9 @@ RUN apt update && apt install -y \
     libzip-dev\
     libxml2-dev\
     autoconf\
-    libpng-dev
+    libpng-dev \
+    nodejs \
+    npm
 # locales \
 # libjpeg62-turbo-dev \
 # libfreetype6-dev \
@@ -33,9 +35,9 @@ RUN apt update && apt install -y \
 # libmagick++-dev \
 # libmagickwand-dev \
 # libpq-dev \
-# libwebp-dev \ 
+# libwebp-dev \
 # libxpm-dev\
-# libpq-dev 
+# libpq-dev
 
 
 # Clear cache
@@ -51,7 +53,7 @@ RUN docker-php-ext-configure gd \
     && docker-php-ext-install mbstring \
     && docker-php-ext-install exif \
     && docker-php-ext-install pcntl \
-    && docker-php-source delete 
+    && docker-php-source delete
 # && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
 # && docker-php-ext-install pdo pdo_pgsql pgsql
 

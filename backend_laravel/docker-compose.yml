@@ -77,7 +77,7 @@ services:
     ports:
       - '${DOCKER_REDIS_PORT}:6379'
     command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD:-laravel_next}
-    volumes: 
+    volumes:
       - laravel_next_cache:/data
     networks:
     - laravel_next_network

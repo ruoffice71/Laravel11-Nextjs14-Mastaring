@@ -26,7 +26,7 @@ class PostController extends Controller
             "vote",
             "created_at"
             )
-            ->orderByDesc("id")->cursorPaginate(20);
+            ->with("user")->orderByDesc("id")->cursorPaginate(20);
 
         return response()->json($posts);
     }
