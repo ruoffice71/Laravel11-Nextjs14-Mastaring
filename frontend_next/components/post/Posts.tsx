@@ -1,11 +1,12 @@
 "use client";
 import React,{useState, useEffect} from 'react';
+import {useImmer} from 'use-immer';
 import PostCard from './PostCard';
 import { laraEcho, pvtLaralEcho} from '@/lib/echo.config';
 import { CustomUser } from '@/app/api/auth/[...nextauth]/authOptions';
 
 export default function Posts({data, user}:{data:ApiResponseType<PostType>, user:CustomUser}) {
-    const [posts, setPosts] = useState<ApiResponseType<PostType>> (data)
+    const [posts, setPosts] = useImmer<ApiResponseType<PostType>> (data)
 
     useEffect(() => {
       /* const pvtLaraEcho = pvtLaralEcho(user.token!);
@@ -18,13 +19,17 @@ export default function Posts({data, user}:{data:ApiResponseType<PostType>, user
         pvtLaraEcho.leave(`App.Models.User.${user.id}`);
       }; */
 
-      laraEcho.channel("test-channel")
-      .listen("TestEvent", (event:any) => {
+      laraEcho.channel("post-broadcast")
+      .listen("PostBroadCastEvent", (event:any) => {
         console.log("The realtime data is:", event);
+        const post:PostType = event.post;
+        setPosts((prevState) => {
+          prevState.data = [post, ...prevState.data];
+        })
       });
 
       return () => {
-        laraEcho.leave("test-channel");
+        laraEcho.leave(`post-broadcast`);
       };
       
     }, []);

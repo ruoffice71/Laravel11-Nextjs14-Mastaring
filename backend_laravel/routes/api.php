@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\PostBroadCastEvent;
 use App\Events\TestEvent;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PostController;
@@ -30,7 +31,8 @@ Route::post("/auth/checkCredentials", [AuthController::class, 'checkCredentias']
 
 Route::post("/test/channel", function() {
     $post = Post:: select("*")->with("user")->orderByDesc("id")->first();
-    TestEvent::dispatch($post);
+    // TestEvent::dispatch($post);
+    PostBroadCastEvent::dispatch($post);
     return response()->json(["message" => "Data send to client"]);
 });
 
