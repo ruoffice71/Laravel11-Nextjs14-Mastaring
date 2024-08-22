@@ -11,8 +11,13 @@ import UserAvatar from '../common/UserAvatar'
 import Image from 'next/image'
 import { ArrowBigUp, LinkIcon, MessageSquare } from 'lucide-react'
 import { formatDate } from '../../lib/utils';
+import { toast } from 'react-toastify'
 
 export default function PostCard({post}:{post:PostType}) {
+    const copyUrl = () => {
+        navigator.clipboard.writeText(post.url)
+        toast.success("Link copied successfully!");
+    }
   return (
     <div>
         <Card className='w-full md:w-[300px] md:h-[500px] bg-muted'>
@@ -35,7 +40,7 @@ export default function PostCard({post}:{post:PostType}) {
                     <MessageSquare size={20}/>
                     {post.comment_count > 0 && <span>{post.comment_count}</span>}
                 </div>
-                <LinkIcon size={20}/>
+                <LinkIcon size={20} onClick={() => copyUrl()}/>
             </CardFooter>
         </Card>
 
