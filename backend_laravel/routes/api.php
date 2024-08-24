@@ -3,6 +3,7 @@
 use App\Events\PostBroadCastEvent;
 use App\Events\TestEvent;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\UserController;
 use App\Models\Post;
@@ -19,7 +20,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post("/update/profile", [UserController::class, 'updateProfile']);
 
     Route::apiResources([
-        "post" => PostController::class
+        "post" => PostController::class,
+        "comment" => CommentController::class,
     ]);
 });
 

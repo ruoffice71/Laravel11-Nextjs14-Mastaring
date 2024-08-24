@@ -8,6 +8,7 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 import Image from 'next/image'
+import AddComment from '../comment/AddComment'
   
 
 export default function ShowPost({children, post}:{children:React.ReactNode, post:PostType}) {
@@ -30,6 +31,7 @@ export default function ShowPost({children, post}:{children:React.ReactNode, pos
                         className='w-full rounded-lg my-2'
                     />
                     <p>{post.description}</p>
+                    <AddComment post={post} />
                 </div>
             </DialogContent>
         </Dialog>
