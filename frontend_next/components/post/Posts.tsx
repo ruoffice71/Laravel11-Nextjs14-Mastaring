@@ -34,7 +34,7 @@ export default function Posts({data, user}:{data:ApiResponseType<PostType>, user
       
     }, []);
   return (
-    <div className='pt-4 p-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4'>
+    <div className='pt-4 p-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4' style={{ height: "90vh" }}>
         {posts.data && 
             posts.data.length > 0 && 
             posts.data.map((item, index) => <PostCard post={item} key={index} />)}

@@ -23,3 +23,10 @@ export const isValidUrl = (url:string):boolean => {
 export const formatDate = (date:string):string => {
   return moment(date).format("DD MMM YYYY");
 }
+
+export const trimString = (data:string):string => {
+  if (data.length <= 50) {
+    return data;
+  }
+  return data.slice(0, 50) + ".."
+}

@@ -10,7 +10,7 @@ import {
 import UserAvatar from '../common/UserAvatar'
 import Image from 'next/image'
 import { ArrowBigUp, LinkIcon, MessageSquare } from 'lucide-react'
-import { formatDate } from '../../lib/utils';
+import { formatDate, trimString } from '../../lib/utils';
 import { toast } from 'react-toastify'
 import ShowPost from './ShowPost'
 
@@ -25,7 +25,7 @@ export default function PostCard({post}:{post:PostType}) {
             <Card className='w-full md:w-[300px] md:h-[500px] bg-muted'>
                 <CardHeader>
                     <UserAvatar image={post.user.profile_image} />
-                    <CardTitle className='text-2xl font-bold'>{post.title}</CardTitle>
+                    <CardTitle className='text-2xl font-bold'>{trimString(post.title)}</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <p className='text-sm mb-2 px-2'>{formatDate(post.created_at)}</p>
