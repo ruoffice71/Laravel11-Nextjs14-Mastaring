@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\PostBroadCastEvent;
+use App\Events\PostCommentCountEvent;
 use App\Events\TestEvent;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CommentController;
@@ -34,7 +35,8 @@ Route::post("/auth/checkCredentials", [AuthController::class, 'checkCredentias']
 Route::post("/test/channel", function() {
     $post = Post:: select("*")->with("user")->orderByDesc("id")->first();
     // TestEvent::dispatch($post);
-    PostBroadCastEvent::dispatch($post);
+    // PostBroadCastEvent::dispatch($post);
+    PostCommentCountEvent::dispatch(13);
     return response()->json(["message" => "Data send to client"]);
 });
 
