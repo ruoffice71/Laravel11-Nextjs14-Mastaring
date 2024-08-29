@@ -7,4 +7,5 @@ export const LOGOUT_URL = "/auth/logout";
 export const CHECK_CREDENTIALS = "/auth/checkCredentials";
 export const UPDATE_PROFILE = "/update/profile";
 export const POST_URL = "/post";
+export const PRIVATE_POST_URL = "/post/private";
 export const COMMENT_URL = "/comment";

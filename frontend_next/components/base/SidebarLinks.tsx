@@ -1,5 +1,5 @@
 "use client";
-import { ArrowBigUp, Flame, Search } from 'lucide-react'
+import { ArrowBigUp, Flame, LinkIcon, Search } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import UserAvatar from '../common/UserAvatar'
@@ -42,6 +42,10 @@ export default function SidebarLinks() {
         <ul>
             <li>
                 <AddPost/>
+                <div className='flex space-x-3 items-center mv-4'>
+                    <LinkIcon className='w-5 h-5' />
+                    <Link href="/dashboard">Dashboard</Link>
+                </div>
             </li>
         </ul>
     </div>

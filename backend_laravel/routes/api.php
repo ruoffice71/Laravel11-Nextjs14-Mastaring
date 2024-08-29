@@ -19,6 +19,7 @@ Route::get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function() {
     Route::post("/auth/logout", [AuthController::class, 'logout']);
     Route::post("/update/profile", [UserController::class, 'updateProfile']);
+    Route::get("/post/private", [PostController::class, 'privatePosts']);
 
     Route::apiResources([
         "post" => PostController::class,

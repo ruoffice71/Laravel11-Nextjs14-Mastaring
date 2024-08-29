@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
@@ -31,6 +32,28 @@ class PostController extends Controller
 
         return response()->json($posts);
     }
+
+    public function privatePosts()
+    {
+        $user = Auth::user();
+        $posts = Post::select(
+            "id",
+            "user_id",
+            "title",
+            "url",
+            "image_url",
+            "description",
+            "comment_count",
+            "vote",
+            "created_at"
+            )
+            ->where("user_id", $user->id)
+            ->with("user")->orderByDesc("id")->cursorPaginate(20);
+
+        return response()->json($posts);
+    }
+
+
 
     /**
      * Store a newly created resource in storage.
