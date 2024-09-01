@@ -21,15 +21,18 @@ import { POST_URL } from '@/lib/apiEndPoint'
 import { useSession } from 'next-auth/react'
 import { CustomUser } from '@/app/api/auth/[...nextauth]/authOptions'
   
-export default function AddPost() {
-    const [open, setOpen] = useState(false);
+
+export default function EditPost({children, post}:{children:React.ReactNode, post:PostType}) {
+    const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false);
     const [postState, setPostState] = useState<PostStateType>({
-        title:"",
-        url:"",
-        image_url:"",
-        description:"",
+        title:post.title || "",
+        url:post.url || "",
+        image_url:post.image_url || "",
+        description:post.description || "",
     });
+    // console.log("post data", post);
+    // console.log("postState data", postState);
     const [errors, setErrors] = useState({
         title:[],
         url:[],
@@ -62,7 +65,7 @@ export default function AddPost() {
     const handleSubmit = (event:React.FormEvent) => {
         event.preventDefault()
         setLoading(true)
-        myAxios.post(POST_URL, postState, {
+        myAxios.put(POST_URL + "/" + post.id, postState, {
             headers:{
                 Authorization:`Bearer ${user.token}`
             }
@@ -70,7 +73,8 @@ export default function AddPost() {
         .then((res) => {
             const response = res.data
             setLoading(false)
-            setPostState({})
+            // setPostState(post)
+            location.reload();
             setOpen(false)
             toast.success("Post Added Successfully!")
         })
@@ -86,20 +90,16 @@ export default function AddPost() {
     }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-        <div className='flex space-x-3 items-center mv-4' onClick={() => setOpen(true)}>
-            <LinkIcon className='w-5 h-5' />
-            <p>Submit Artical</p>
-        </div>
-        </DialogTrigger>
-        <DialogContent 
-            onInteractOutside={(e) => e.preventDefault()} // it prevent dialog close when click outside.
-            className='overflow-y-scroll max-h-screen'>
-            <DialogHeader>
-                <DialogTitle>Add Post</DialogTitle>
-            </DialogHeader>
-            <form onSubmit={handleSubmit}>
+    <div>
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>{children}</DialogTrigger>
+            <DialogContent 
+                onInteractOutside={(e) => e.preventDefault()} // it prevent dialog close when click outside.
+                className='overflow-y-scroll max-h-screen'>
+                <DialogHeader>
+                    <DialogTitle>Edit Post</DialogTitle>
+                </DialogHeader>
+                <form onSubmit={handleSubmit}>
                 {
                     postState.image_url && (
                         <Image
@@ -144,8 +144,8 @@ export default function AddPost() {
                     <Button className='w-full' disabled={loading}>{loading ? "Processing.." : "Submit"}</Button>
                 </div>
             </form>
-        </DialogContent>
-    </Dialog>
-
+            </DialogContent>
+        </Dialog>
+    </div>
   )
 }

@@ -21,14 +21,14 @@ export default function Posts({data, user}:{data:ApiResponseType<PostType>, user
 
       laraEcho.channel("post-broadcast")
       .listen("PostBroadCastEvent", (event:any) => {
-        console.log("The realtime data is:", event);
+        // console.log("The realtime data is:", event);
         const post:PostType = event.post;
         setPosts((prevState) => {
           prevState.data = [post, ...prevState.data];
         });
       })
       .listen("PostCommentCountEvent", (event:any) => {
-        console.log("The comment count increment:", event);
+        // console.log("The comment count increment:", event);
         setPosts((prev) => {
           const index = prev.data.findIndex((item) => item.id === event.post_id);
           if (index != -1) {

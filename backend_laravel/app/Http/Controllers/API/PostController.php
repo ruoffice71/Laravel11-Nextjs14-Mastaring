@@ -88,9 +88,31 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostRequest $request, string $id)
     {
-        //
+        $payload = $request->validated();
+        try {
+            $post = Post::findOrFail($id);
+            $user = $request->user();
+            $payload["user_id"] = $user->id;
+
+            // Update the post
+            $post->update($payload);
+
+            // Retrieve the updated post with the user relationship
+            $updatedPost = Post::with("user")->where("id", $post->id)->first();
+
+            // Dispatched the event (if necessary)
+            PostBroadCastEvent::dispatch($updatedPost);
+
+            return response()->json([
+                "message" => "Post updated successfully!",
+                "post" => $updatedPost
+            ]);
+        } catch (\Exception $err) {
+            Log::info("post-error => " . $err->getMessage());
+            return response()->json(["message" => "something went wrong.please try again!"], 500);
+        }
     }
 
     /**

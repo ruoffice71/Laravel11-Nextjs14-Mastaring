@@ -35,7 +35,6 @@ export default function ShowPost({children, post}:{children:React.ReactNode, pos
                 </div>
             </DialogContent>
         </Dialog>
-
     </div>
   )
 }
