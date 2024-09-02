@@ -127,6 +127,7 @@ export default function EditPost({children, post}:{children:React.ReactNode, pos
                         id='title' 
                         value={postState.title} 
                         onChange={(e) => setPostState({...postState, title:e.target.value})} 
+                        autoFocus
                         placeholder='Type here..'/>
                     <span className='text-red-500'>{errors.title?.[0]}</span>
                 </div>
