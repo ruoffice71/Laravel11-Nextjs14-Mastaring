@@ -15,7 +15,7 @@ const nextConfig = {
     },
 
     // this line will be commented before live.
-    reactStrictMode: false,
+    // reactStrictMode: false,
 };
 
 export default nextConfig;
